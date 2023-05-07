@@ -1,2 +1,2 @@
 # hospital-management-system
-![UML Diagram](./UML.png)
+![UML Diagram](./Untitled Diagram.drawio.png)
