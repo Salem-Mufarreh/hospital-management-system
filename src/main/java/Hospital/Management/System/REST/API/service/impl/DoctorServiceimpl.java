@@ -8,6 +8,7 @@ import Hospital.Management.System.REST.API.service.DoctorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorServiceimpl implements DoctorService {
@@ -26,22 +27,33 @@ public class DoctorServiceimpl implements DoctorService {
 
     @Override
     public List<DoctorDTO> getAllDoctors() {
-        return null;
+        return _doctorRepo.findAll().stream().map(doctor -> mapToDTO(doctor)).collect(Collectors.toList());
     }
 
     @Override
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
-        return null;
+        Doctor doctor = mapToEntity(doctorDTO);
+        Doctor newdoctor =_doctorRepo.save(doctor);
+        return mapToDTO(newdoctor);
     }
 
     @Override
     public DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO) {
-        return null;
+        System.out.println("here"+doctorDTO.toString());
+        Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id",id));
+        doctor.setPhoneNumber(doctorDTO.getPhoneNumber());
+        doctor.setName(doctorDTO.getName());
+        doctor.setEmail(doctorDTO.getEmail());
+        doctor.setSpecialty(doctorDTO.getSpecialty());
+        _doctorRepo.save(doctor);
+
+        return mapToDTO(doctor);
     }
 
     @Override
     public void deleteDoctor(Long id) {
-
+        Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor","id",id));
+        _doctorRepo.delete(doctor);
     }
     public DoctorDTO mapToDTO (Doctor doctor){
         DoctorDTO doctorDTO = new DoctorDTO();
