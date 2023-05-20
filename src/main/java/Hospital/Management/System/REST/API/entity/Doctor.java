@@ -1,9 +1,6 @@
 package Hospital.Management.System.REST.API.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +14,7 @@ import java.io.Serializable;
 @Table
 public class Doctor implements Serializable {
 @Id
-@GeneratedValue
+@GeneratedValue(strategy= GenerationType.IDENTITY)
 private Long DoctorId;
 private String Name;
 private String Password;

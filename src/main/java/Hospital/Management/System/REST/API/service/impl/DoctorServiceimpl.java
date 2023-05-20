@@ -39,7 +39,6 @@ public class DoctorServiceimpl implements DoctorService {
 
     @Override
     public DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO) {
-        System.out.println("here"+doctorDTO.toString());
         Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id",id));
         doctor.setPhoneNumber(doctorDTO.getPhoneNumber());
         doctor.setName(doctorDTO.getName());
