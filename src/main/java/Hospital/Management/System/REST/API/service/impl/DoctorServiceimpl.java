@@ -20,7 +20,7 @@ public class DoctorServiceimpl implements DoctorService {
 
     @Override
     public DoctorDTO getDoctorById(Long id) {
-        Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
+        Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", id));
 
         return mapToDTO(doctor);
     }

@@ -2,6 +2,7 @@ package Hospital.Management.System.REST.API.service.impl;
 
 import Hospital.Management.System.REST.API.dto.PatientDTO;
 import Hospital.Management.System.REST.API.entity.Patient;
+import Hospital.Management.System.REST.API.exception.ResourceNotFoundException;
 import Hospital.Management.System.REST.API.repository.PatientRepository;
 import Hospital.Management.System.REST.API.service.PatientService;
 import org.springframework.stereotype.Service;
@@ -19,29 +20,38 @@ public class PatientImpl implements PatientService {
     @Override
     public PatientDTO CreatePatient(PatientDTO patientDTO) {
         Patient patient = toPatient(patientDTO);
-        System.out.println(patient.toString());
         Patient newPatient= _PatientRepository.save(patient);
-        System.out.println(newPatient);
         return toPatientDTO(newPatient);
     }
 
     @Override
     public PatientDTO GetPatientById(Long id) {
-        return null;
+        Patient patient = new Patient();
+        if(id != null){
+            patient =_PatientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient","id",id));
+        }
+        return toPatientDTO(patient);
     }
 
     @Override
     public List<PatientDTO> GetAllPatients() {
-        return null;
+        List<PatientDTO> Patients = _PatientRepository.findAll().stream().map(d -> toPatientDTO(d)).toList();
+        return Patients;
     }
 
     @Override
-    public PatientDTO UpdatePatient(Long id, PatientDTO patient) {
-        return null;
+    public PatientDTO UpdatePatient(Long id, PatientDTO patientDTO) {
+        Patient patient = _PatientRepository.findById(id).orElseThrow();
+        patient = toPatient(patientDTO);
+        _PatientRepository.save(patient);
+        return toPatientDTO(patient);
+
     }
 
     @Override
     public void DeletePatient(Long id) {
+        Patient patient = _PatientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient","id",id));
+        _PatientRepository.delete(patient);
 
     }
 
