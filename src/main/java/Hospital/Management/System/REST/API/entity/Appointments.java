@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class Appointments {
     @Id
     @GeneratedValue
-    private int AppointmentId;
+    private Long AppointmentId;
     private LocalDateTime Date;
     private Time StartTime;
     private Time EndTime;
