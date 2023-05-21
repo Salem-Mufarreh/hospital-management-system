@@ -29,7 +29,10 @@ public class AppointmentsImpl implements AppointmentsService {
     @Override
     public AppointmentDTO CreateAppointments(AppointmentDTO appointmentDTO) {
         Appointments appointment = mapToAppointment(appointmentDTO);
+        System.out.println(appointment +"-----------------------");
         Appointments appointments = _AppointmentsRepository.save(appointment);
+        System.out.println("here\n"+appointments);
+        System.out.println(mapToAppointmentDTO(appointments));
         return mapToAppointmentDTO(appointments);
     }
 
@@ -71,25 +74,28 @@ public class AppointmentsImpl implements AppointmentsService {
 
     @Override
     public AppointmentDTO UpdateAppointment(Long id, AppointmentDTO appointments) {
-        return null;
+        AppointmentDTO appointment = GetAppointmentById(id);
+        appointment = appointments;
+        _AppointmentsRepository.save(mapToAppointment(appointment));
+        return appointment;
     }
 
     @Override
     public void DeleteAppointment(Long id) {
-
+        AppointmentDTO appointmentDTO = GetAppointmentById(id);
+        _AppointmentsRepository.delete(mapToAppointment(appointmentDTO));
     }
     public Appointments mapToAppointment(AppointmentDTO appointmentDTO){
         Appointments appointment = new Appointments();
-        appointment.setDate(appointmentDTO.getDate());
-        appointment.setStartTime(appointmentDTO.getStartTime());
-        appointment.setEndTime(appointmentDTO.getEndTime());
         appointment.setType(appointmentDTO.getType());
         appointment.setStatus(appointmentDTO.getStatus());
+        appointment.setStartTime(appointmentDTO.getStartTime());
+        appointment.setEndTime(appointmentDTO.getEndTime());
         appointment.setCreationDate(appointmentDTO.getCreationDate());
-        PatientDTO patientDTO = _PatientService.GetPatientById(appointmentDTO.getAppointmentId());
-        appointment.setPatient(_PatientService.toPatient(patientDTO));
-        DoctorDTO doctorDTO = _DoctorService.getDoctorById(appointmentDTO.getDoctorId());
-        appointment.setDoctor(_DoctorService.mapToEntity(doctorDTO));
+        appointment.setDate(appointmentDTO.getDate());
+        appointment.setDoctor(_DoctorService.mapToEntity(_DoctorService.getDoctorById(appointmentDTO.getDoctorId())));
+        appointment.setPatient(_PatientService.toPatient(_PatientService.GetPatientById(appointmentDTO.getPatientId())));
+        appointment.setAppointmentId(appointmentDTO.getAppointmentId());
         return appointment;
     }
     public AppointmentDTO mapToAppointmentDTO(Appointments appointment){

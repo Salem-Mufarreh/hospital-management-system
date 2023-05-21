@@ -30,27 +30,8 @@ public class AppointmentController {
 
     @PostMapping("/")
     public ResponseEntity<AppointmentDTO> CreateAppointment(@Valid @RequestBody AppointmentDTO appointments){
-        if (appointments.getDoctorId() != null && appointments.getPatientId() != null && appointments.getAppointmentId() != null){
-            if(_DoctorService.getDoctorById(appointments.getDoctorId()) != null){
-                if(_PatientService.GetPatientById(appointments.getPatientId()) != null){
-                    return new ResponseEntity(_AppointmentsService.CreateAppointments(appointments), HttpStatus.CREATED);
-                }
-                else{
-                    return new ResponseEntity("Error Null Patient", HttpStatus.NOT_FOUND );
-
-                }
-
-            }
-            else{
-                return new ResponseEntity("Error Null Doctor", HttpStatus.NOT_FOUND );
-
-            }
-        }
-        else{
-            _log.error("Appointment Error");
-            return new ResponseEntity("Error in Appointment", HttpStatus.NOT_FOUND );
-        }
-
+        AppointmentDTO appointment = _AppointmentsService.CreateAppointments(appointments);
+        return new ResponseEntity(appointment,HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
@@ -87,5 +68,13 @@ public class AppointmentController {
         return new ResponseEntity(_AppointmentsService.GetAppointmentsForPatient(id),HttpStatus.OK);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<AppointmentDTO> UpdateAppointment(@PathVariable(name = "id")Long id, @Valid @RequestBody AppointmentDTO appointmentDTO){
+        return new ResponseEntity(_AppointmentsService.UpdateAppointment(id, appointmentDTO),HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity DeleteAppointment(@PathVariable(name = "id")Long id){
+        return new ResponseEntity("Appointment Was Deleted",HttpStatus.OK);
+    }
 
 }
