@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -14,7 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table
-public class Patient {
+public class Patient implements Serializable {
     @jakarta.persistence.Id
     @GeneratedValue
     private Long PatientId;

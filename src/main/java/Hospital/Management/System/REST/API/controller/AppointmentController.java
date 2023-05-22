@@ -74,6 +74,7 @@ public class AppointmentController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity DeleteAppointment(@PathVariable(name = "id")Long id){
+        _AppointmentsService.DeleteAppointment(id);
         return new ResponseEntity("Appointment Was Deleted",HttpStatus.OK);
     }
 
