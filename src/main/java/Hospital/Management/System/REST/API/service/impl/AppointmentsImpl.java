@@ -12,6 +12,7 @@ import Hospital.Management.System.REST.API.service.PatientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class AppointmentsImpl implements AppointmentsService {
@@ -29,10 +30,8 @@ public class AppointmentsImpl implements AppointmentsService {
     @Override
     public AppointmentDTO CreateAppointments(AppointmentDTO appointmentDTO) {
         Appointments appointment = mapToAppointment(appointmentDTO);
-        System.out.println(appointment +"-----------------------");
+        appointment.setAppointmentId(new Random().nextLong());
         Appointments appointments = _AppointmentsRepository.save(appointment);
-        System.out.println("here\n"+appointments);
-        System.out.println(mapToAppointmentDTO(appointments));
         return mapToAppointmentDTO(appointments);
     }
 

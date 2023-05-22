@@ -45,6 +45,7 @@ public class MedicalRecordController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity DeleteMedicalRecord(@PathVariable(name = "id") long id){
+        _MedicalRecordService.DeleteMedicalRecord(id);
         return ResponseEntity.ok("Medical Record was Deleted!");
     }
     @GetMapping("/patient/{id}")
@@ -59,4 +60,5 @@ public class MedicalRecordController {
     public ResponseEntity<MedicalRecordDTO> GetMedicalRecordForAppointment(@PathVariable(name = "id") Long id){
         return ResponseEntity.ok(_MedicalRecordService.GetMedicalRecordByAppointment(id));
     }
+
 }

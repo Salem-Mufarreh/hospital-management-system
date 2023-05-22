@@ -15,6 +15,7 @@ import Hospital.Management.System.REST.API.service.PatientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class MedicalRecordImpl implements MedicalRecordService {
@@ -40,6 +41,7 @@ public class MedicalRecordImpl implements MedicalRecordService {
             throw new RecordExistsException("Medical record already exists for the appointment");
         }
         MedicalRecord medicalRecord = mapToEntity(medicalRecordDTO);
+        medicalRecord.setMedicalRecordId(new Random().nextLong());
         System.out.println(medicalRecord.toString());
         MedicalRecord NewmedicalRecord = _MedicalRecordRepository.save(medicalRecord);
         return mapToDTO(NewmedicalRecord);
@@ -90,8 +92,11 @@ public class MedicalRecordImpl implements MedicalRecordService {
     @Override
     public MedicalRecordDTO GetMedicalRecordByAppointment(Long id) {
         AppointmentDTO appointmentDTO = _AppointmentsService.GetAppointmentById(id);
-
-        return mapToDTO(_MedicalRecordRepository.getMedicalRecordByAppointment(id));
+        MedicalRecord record = _MedicalRecordRepository.getMedicalRecordByAppointment(id);
+        if(record == null){
+            throw new ResourceNotFoundException("MedicalRecord","id",id);
+        }
+        return mapToDTO(record);
     }
 
     public MedicalRecordDTO mapToDTO(MedicalRecord medicalRecord){

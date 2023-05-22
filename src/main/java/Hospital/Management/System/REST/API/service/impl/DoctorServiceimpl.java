@@ -8,6 +8,7 @@ import Hospital.Management.System.REST.API.service.DoctorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,6 +34,7 @@ public class DoctorServiceimpl implements DoctorService {
     @Override
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
         Doctor doctor = mapToEntity(doctorDTO);
+        doctor.setDoctorId(new Random().nextLong());
         Doctor newdoctor =_doctorRepo.save(doctor);
         return mapToDTO(newdoctor);
     }
@@ -66,11 +68,12 @@ public class DoctorServiceimpl implements DoctorService {
 
     public Doctor mapToEntity(DoctorDTO dto){
         Doctor doctor = new Doctor();
+        doctor.setDoctorId(dto.getDoctorId());
         doctor.setName(dto.getName());
         doctor.setDoctorId(dto.getDoctorId());
         doctor.setEmail(dto.getEmail());
-        doctor.setSpecialty(doctor.getSpecialty());
-        doctor.setPhoneNumber(doctor.getPhoneNumber());
+        doctor.setSpecialty(dto.getSpecialty());
+        doctor.setPhoneNumber(dto.getPhoneNumber());
         return doctor;
     }
 }

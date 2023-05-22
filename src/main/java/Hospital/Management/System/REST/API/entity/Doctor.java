@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Table
 public class Doctor implements Serializable {
 @Id
-@GeneratedValue(strategy= GenerationType.IDENTITY)
+@GeneratedValue
 private Long DoctorId;
 private String Name;
 private String Password;

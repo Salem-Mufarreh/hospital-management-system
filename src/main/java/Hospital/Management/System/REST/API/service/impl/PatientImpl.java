@@ -8,6 +8,7 @@ import Hospital.Management.System.REST.API.service.PatientService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class PatientImpl implements PatientService {
@@ -20,6 +21,7 @@ public class PatientImpl implements PatientService {
     @Override
     public PatientDTO CreatePatient(PatientDTO patientDTO) {
         Patient patient = toPatient(patientDTO);
+        patient.setPatientId(new Random().nextLong());
         Patient newPatient= _PatientRepository.save(patient);
         return toPatientDTO(newPatient);
     }
