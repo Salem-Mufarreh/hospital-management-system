@@ -1,6 +1,18 @@
 # hospital-management-system
 Hospital Management System
 This repository contains the source code for a Hospital Management System. The system provides APIs for managing doctors, patients, appointments, and medical records.
+# Table of Content
+<!-- TOC -->
+* [hospital-management-system](#hospital-management-system)
+* [Table of Content](#table-of-content)
+* [UML Diagram](#uml-diagram)
+* [Design Template](#design-template-)
+  * [Doctor Api](#doctor-api)
+  * [Patient Api](#patient-api)
+  * [Appointments](#appointments-)
+  * [Medical Records](#medical-records)
+<!-- TOC -->
+
 # UML Diagram
 The following UML diagram illustrates the class structure and relationships in the Hospital Management System. It provides an overview of the main entities and their associations within the system. The diagram showcases the relationships between doctors, patients, appointments, and medical records, helping to visualize the system's design and interactions.
 
@@ -74,7 +86,7 @@ The Medical Records API allows users to manage medical records within the system
 
 - Create New Medical Record: Users can create a new medical record by making a POST request to this endpoint. They need to provide relevant information such as the last modified date, doctor ID, patient ID, appointment ID, medical record ID, diagnosis, and treatment.
 
-- Get Medical Record By Id: This endpoint retrieves a medical record based on its unique identifier. Users can specify the record ID in the URL path to fetch the corresponding medical record.
+- Get Medical Record By ID: This endpoint retrieves a medical record based on its unique identifier. Users can specify the record ID in the URL path to fetch the corresponding medical record.
 
 - Get all Medical Records: Users can retrieve a list of all medical records available in the system by making a GET request to this endpoint.
 
