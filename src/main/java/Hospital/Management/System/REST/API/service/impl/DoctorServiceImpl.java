@@ -12,33 +12,34 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
-public class DoctorServiceimpl implements DoctorService {
+public class DoctorServiceImpl implements DoctorService {
     private final DoctorRepository _doctorRepo;
 
-    public DoctorServiceimpl(DoctorRepository doctorRepo) {
+    public DoctorServiceImpl(DoctorRepository doctorRepo) {
         _doctorRepo = doctorRepo;
     }
-
+    /* select doctor from id if it doesn't exist return 404 error*/
     @Override
     public DoctorDTO getDoctorById(Long id) {
         Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", id));
 
         return mapToDTO(doctor);
     }
-
+    /* get all doctors */
     @Override
     public List<DoctorDTO> getAllDoctors() {
         return _doctorRepo.findAll().stream().map(doctor -> mapToDTO(doctor)).collect(Collectors.toList());
     }
-
+    /* create new doctor*/
     @Override
     public DoctorDTO createDoctor(DoctorDTO doctorDTO) {
         Doctor doctor = mapToEntity(doctorDTO);
+        /*generate a random number */
         doctor.setDoctorId(new Random().nextLong());
         Doctor newdoctor =_doctorRepo.save(doctor);
         return mapToDTO(newdoctor);
     }
-
+    /*update doctor*/
     @Override
     public DoctorDTO updateDoctor(Long id, DoctorDTO doctorDTO) {
         Doctor doctor = _doctorRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Doctor", "id",id));

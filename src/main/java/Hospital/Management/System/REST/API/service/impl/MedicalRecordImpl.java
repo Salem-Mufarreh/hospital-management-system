@@ -33,11 +33,15 @@ public class MedicalRecordImpl implements MedicalRecordService {
 
     @Override
     public MedicalRecordDTO CreateMedicalRecord(MedicalRecordDTO medicalRecordDTO) {
+        /*checks to see if any of (doctor, patient,appointment) doesn't exist to return an error*/
         DoctorDTO doctorDTO = _DoctorService.getDoctorById(medicalRecordDTO.getDoctorId());
         PatientDTO patientDTO = _PatientService.GetPatientById(medicalRecordDTO.getPatientId());
         AppointmentDTO appointmentDTO = _AppointmentsService.GetAppointmentById(medicalRecordDTO.getAppointmentId());
         MedicalRecord record = _MedicalRecordRepository.getMedicalRecordByAppointment(appointmentDTO.getAppointmentId());
         if(record != null){
+            /*if the record already exists because of 1-1 relationship you can't create a new one but can update it
+            * return a runtime error for conflict
+            * */
             throw new RecordExistsException("Medical record already exists for the appointment");
         }
         MedicalRecord medicalRecord = mapToEntity(medicalRecordDTO);
@@ -73,7 +77,7 @@ public class MedicalRecordImpl implements MedicalRecordService {
         MedicalRecord medicalRecord = mapToEntity(GetMedicalRecord(id));
         _MedicalRecordRepository.delete(medicalRecord);
     }
-
+    /*run a query to get all the records for the patient */
     @Override
     public List<MedicalRecordDTO> GetMedicalRecordForPatient(Long id) {
         PatientDTO patientDTO = _PatientService.GetPatientById(id);
@@ -81,14 +85,14 @@ public class MedicalRecordImpl implements MedicalRecordService {
         List<MedicalRecordDTO> list = _MedicalRecordRepository.getMedicalRecordByPatientId(id).stream().map(a -> mapToDTO(a)).toList();
         return list;
     }
-
+    /*get all records that have been added by doctor */
     @Override
     public List<MedicalRecordDTO> GetMedicalRecordByDoctor(Long id) {
         DoctorDTO doctorDTO = _DoctorService.getDoctorById(id);
         List<MedicalRecordDTO> list = _MedicalRecordRepository.getMedicalRecordByDoctorId(id).stream().map(a -> mapToDTO(a)).toList();
         return list;
     }
-
+    /*get medical record by using the appointment */
     @Override
     public MedicalRecordDTO GetMedicalRecordByAppointment(Long id) {
         AppointmentDTO appointmentDTO = _AppointmentsService.GetAppointmentById(id);
