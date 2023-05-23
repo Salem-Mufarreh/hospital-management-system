@@ -11,6 +11,7 @@ This repository contains the source code for a Hospital Management System. The s
   * [Patient Api](#patient-api)
   * [Appointments](#appointments-)
   * [Medical Records](#medical-records)
+  * [Postman](#Postman)
 <!-- TOC -->
 
 # UML Diagram
@@ -110,3 +111,7 @@ The Medical Records API allows users to manage medical records within the system
 | GET         | `api/records/patient/{id}`    | 200 / 404             | Get All Records For Patient         | `GET /api/records/patient/1 HTTP/1.1 Host: localhost:8080 Content-Type: application/json`                                                                                                                                                                                              | `[{"lastModifiedDate":"2023-05-22T10:30:00","doctorId":1,"patientId":1,"appointmentId":1,"medicalRecordId":1,"diagnosis":"some diagnosis","treatment":"some treatment2222"},{"lastModifiedDate":"2023-05-22T10:30:00","doctorId":1,"patientId":1,"appointmentId":2,"medicalRecordId":2,"diagnosis":"some diagnosis","treatment":"some treatment"}] ` | 
 | GET         | `api/records/doctor/{id}`     | 200 / 404             | Get All Records Add by Doctor       | `GET /api/records/doctor/1 HTTP/1.1 Host: localhost:8080 Content-Type: application/json`                                                                                                                                                                                               | `[{"lastModifiedDate":"2023-05-22T10:30:00","diagnosis":"some diagnosis","treatment":"some treatment2222","medicalRecordId":1,"appointmentId":1,"doctorId":1,"patientId":1},{"lastModifiedDate":"2023-05-22T10:30:00","diagnosis":"some diagnosis","treatment":"some treatment","medicalRecordId":2,"appointmentId":2,"doctorId":1,"patientId":1}] ` | 
 | GET         | `api/record/appointment/{id}` | 200 / 404             | Get Medical Records For Appointment | `GET /api/records/appointment/1 HTTP/1.1 Host: localhost:8080 Content-Type: application/json`                                                                                                                                                                                          | `{"lastModifiedDate":"2023-05-22T10:30:00","treatment":"some treatment2222","diagnosis":"some diagnosis","medicalRecordId":1,"doctorId":1,"patientId":1,"appointmentId":1}  `                                                                                                                                                                        |
+
+
+# Postman 
+Click here to see postman documentation [here](./Postman)
